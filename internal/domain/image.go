@@ -50,13 +50,6 @@ type ImageProcessor interface {
 	GetImageInfo(imageData []byte) (width, height int, format ImageFormat, err error)
 }
 
-// ImageStorage define la interfaz para el almacenamiento temporal de imágenes
-type ImageStorage interface {
-	SaveImage(data []byte, filename string) (string, error)
-	GetImage(path string) ([]byte, error)
-	DeleteImage(path string) error
-}
-
 // ZipService define la interfaz para la creación de archivos ZIP
 type ZipService interface {
 	CreateZip(files map[string][]byte) ([]byte, error)

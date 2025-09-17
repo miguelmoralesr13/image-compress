@@ -15,7 +15,6 @@ import (
 // CompressionHandler maneja las solicitudes de compresión de imágenes
 type CompressionHandler struct {
 	imageProcessor domain.ImageProcessor
-	storage        domain.ImageStorage
 	zipService     domain.ZipService
 	validator      *validator.Validate
 }
@@ -23,12 +22,10 @@ type CompressionHandler struct {
 // NewCompressionHandler crea una nueva instancia del handler
 func NewCompressionHandler(
 	imageProcessor domain.ImageProcessor,
-	storage domain.ImageStorage,
 	zipService domain.ZipService,
 ) *CompressionHandler {
 	return &CompressionHandler{
 		imageProcessor: imageProcessor,
-		storage:        storage,
 		zipService:     zipService,
 		validator:      validator.New(),
 	}

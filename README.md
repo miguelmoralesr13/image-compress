@@ -36,7 +36,7 @@ API REST para comprimir imágenes individuales y en lote, desarrollada en Go sig
 - ✅ Manejo de errores robusto
 - ✅ CORS habilitado
 - ✅ **Sin almacenamiento**: Las imágenes se procesan en memoria y se devuelven al cliente
-- ✅ **Procesamiento temporal**: Solo usa directorio temporal para archivos ZIP
+- ✅ **Procesamiento en memoria**: Todo el procesamiento se hace en memoria, sin archivos temporales
 
 ## 🚀 Instalación y Ejecución
 
@@ -284,7 +284,6 @@ El proyecto sigue los principios SOLID:
 │   │   └── errors.go     # Errores del dominio
 │   ├── services/         # Implementaciones de servicios
 │   │   ├── image_processor.go  # Procesamiento de imágenes
-│   │   ├── storage.go          # Almacenamiento temporal
 │   │   └── zip_service.go      # Creación de archivos ZIP
 │   └── handlers/         # Handlers HTTP
 │       ├── compression_handler.go  # Endpoints de compresión
