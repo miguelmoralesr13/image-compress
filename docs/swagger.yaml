@@ -1,0 +1,189 @@
+basePath: /
+definitions:
+  domain.BatchCompressionRequest:
+    properties:
+      format:
+        $ref: '#/definitions/domain.ImageFormat'
+      images:
+        items:
+          $ref: '#/definitions/domain.ImageData'
+        maxItems: 10
+        minItems: 1
+        type: array
+      quality:
+        maximum: 100
+        minimum: 1
+        type: integer
+    required:
+    - images
+    type: object
+  domain.ImageData:
+    properties:
+      data:
+        items:
+          type: integer
+        type: array
+      filename:
+        type: string
+    required:
+    - data
+    - filename
+    type: object
+  domain.ImageFormat:
+    enum:
+    - jpeg
+    - png
+    - webp
+    type: string
+    x-enum-varnames:
+    - JPEG
+    - PNG
+    - WEBP
+host: localhost:8080
+info:
+  contact:
+    email: miguel@example.com
+    name: Miguel Morales
+  description: API REST para comprimir imágenes individuales y en lote, desarrollada
+    en Go siguiendo los principios SOLID.
+  title: Image Compress API
+  version: 1.0.0
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Obtiene información general sobre la API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Información de la API
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Información de la API
+      tags:
+      - General
+  /compress:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Comprime una imagen individual con la calidad y formato especificados
+      parameters:
+      - description: Archivo de imagen a comprimir
+        in: formData
+        name: image
+        required: true
+        type: file
+      - default: 80
+        description: Calidad de compresión (1-100)
+        in: formData
+        name: quality
+        type: integer
+      - default: jpeg
+        description: Formato de salida (jpeg, png, webp)
+        enum:
+        - jpeg
+        - png
+        - webp
+        in: formData
+        name: format
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Imagen comprimida
+          schema:
+            type: file
+        "400":
+          description: Error en la solicitud
+          schema:
+            type: string
+        "500":
+          description: Error interno del servidor
+          schema:
+            type: string
+      summary: Comprimir una imagen
+      tags:
+      - Compression
+  /compress/batch:
+    post:
+      consumes:
+      - application/json
+      description: Comprime múltiples imágenes y las devuelve en un archivo ZIP
+      parameters:
+      - description: Datos de compresión en lote
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.BatchCompressionRequest'
+      produces:
+      - application/zip
+      responses:
+        "200":
+          description: Archivo ZIP con imágenes comprimidas
+          schema:
+            type: file
+        "400":
+          description: Error en la solicitud
+          schema:
+            type: string
+        "500":
+          description: Error interno del servidor
+          schema:
+            type: string
+      summary: Comprimir múltiples imágenes
+      tags:
+      - Compression
+  /compress/info:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Obtiene información detallada de una imagen
+      parameters:
+      - description: Archivo de imagen a analizar
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Información de la imagen
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Error en la solicitud
+          schema:
+            type: string
+        "500":
+          description: Error interno del servidor
+          schema:
+            type: string
+      summary: Obtener información de imagen
+      tags:
+      - Compression
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Verifica el estado de la API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Estado de la API
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Health Check
+      tags:
+      - General
+schemes:
+- http
+swagger: "2.0"

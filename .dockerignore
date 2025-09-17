@@ -1,0 +1,58 @@
+# Archivos de Git
+.git
+.gitignore
+
+# Archivos de documentación
+README.md
+*.md
+docs/
+
+# Archivos de configuración local
+.env
+.env.local
+.env.*.local
+
+# Directorios temporales
+temp/
+tmp/
+*.tmp
+
+# Archivos de logs
+*.log
+logs/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de test
+*_test.go
+test/
+tests/
+
+# Archivos de build local
+main
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Archivos de Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Archivos de CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Archivos de configuración de desarrollo
+Makefile
